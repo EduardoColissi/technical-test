@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Transportadoras {
+  id        String      @id @default(uuid())
+  cnpj      String      @unique @db.VarChar(14)
+  fantasia  String      @db.VarChar(150)
+
+  entregas  Entregas[]
+
+  @@map("transportadoras")
+}
+
+model Entregas {
+  id                String      @id @default(uuid())
+  id_transportadora String      @db.VarChar(36)
+  volumes           Int         @db.Int
+  nome_remetente    String      @db.VarChar(250)
+  id_destinatario   String      @db.VarChar(36)
+
+  transportadora   Transportadoras @relation(fields: [id_transportadora], references: [id])
+  destinatario     Destinatarios   @relation(fields: [id_destinatario], references: [id])
+
+  rastreamento     Rastreamento[]
+  
+  @@map("entregas")
+}
+
+model Destinatarios {
+  id        String      @id @default(uuid())
+  nome      String      @db.VarChar(250)
+  cpf       String      @unique @db.VarChar(11)
+  endereco  String      @db.VarChar(250)
+  estado    String      @db.VarChar(100)
+  cep       String      @db.VarChar(9)
+  pais      String      @db.VarChar(100)
+  lat       String      @db.VarChar(20)
+  lng       String      @db.VarChar(20)
+
+  entregas  Entregas[]
+
+  @@map("destinatarios")
+}
+
+model Rastreamento {
+  id          String      @id @default(uuid())
+  id_entrega  String      @db.VarChar(36)
+  message     String      @db.VarChar(250)
+  date        DateTime    @db.DateTime
+
+  entrega     Entregas @relation(fields: [id_entrega], references: [id])
+
+  @@map("rastreamento")
+}
