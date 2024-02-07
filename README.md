@@ -4,7 +4,9 @@
 Antes de começar, certifique-se de ter instalado em sua máquina:
 
 Git
+
 Node.js
+
 MySQL
 
 ### Clonar o Repositório
