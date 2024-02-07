@@ -25,7 +25,7 @@ Para começar, clone o repositório do GitHub para a sua máquina local usando o
   
 ```npm install```
 
-- Criar arquivo .env dentro da pasta backend e colar a seguinte linha dentro:
+- Criar arquivo .env dentro da pasta backend e colar a seguinte linha dentro, de acordo com a configuração do seu banco de dados:
   
 ```DATABASE_URL="mysql://seuUsuario:suaSenha@127.0.0.1:suaPorta/technical-test-eduardo?schema=public"```
 
@@ -34,8 +34,9 @@ Meu exemplo:
 
 - Configurar o Prisma
 
-```npx prisma init```
-```npx prisma migrate dev```
+```npx prisma generate```
+
+```npx prisma db push```
 
 - Iniciar o Servidor Backend
 
